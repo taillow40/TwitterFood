@@ -109,6 +109,7 @@ def load_data(data, y_labels, word2vec_path, batch_size):
     # load in labels
     with open(y_labels, "rb") as file:
         y = pickle.load(file)
+        y = np.array(y)
 
     # get embedding look up table for embedding layer
     embed_lookup = KeyedVectors.load_word2vec_format(word2vec_path, binary = False)
