@@ -174,7 +174,7 @@ def train(
         for inputs, labels in train_loader:
             counter += 1
 
-            inputs, labels = inputs.to(device), labels.to(device)
+            inputs, labels = inputs.to(device), labels.to(device).long()
 
             # zero accumulated gradients
             net.zero_grad()
@@ -183,7 +183,7 @@ def train(
             output = net(inputs)
 
             # calculate the loss and perform backprop
-            loss = criterion(output, labels)
+            loss = criterion(output, labels.long())
             loss.backward()
             optimizer.step()
             
@@ -198,10 +198,10 @@ def train(
                 
                 for inputs, labels in valid_loader:
 
-                    inputs, labels = inputs.to(device), labels.to(device)
+                    inputs, labels = inputs.to(device), labels.to(device).long()
 
                     output = net(inputs)
-                    val_loss = criterion(output, labels)
+                    val_loss = criterion(output, labels.long())
 
                     val_losses.append(val_loss.item())
                     running_val_loss += val_loss.item()
@@ -263,20 +263,20 @@ def eval(
     # iterate over test data
     for inputs, labels in test_loader:
 
-        inputs, labels = inputs.to(device), labels.to(device)
+        inputs, labels = inputs.to(device), labels.to(device).long()
         
         # get predicted outputs
         output = net(inputs)
         
         # calculate loss
-        test_loss = criterion(output, labels)
+        test_loss = criterion(output, labels.long())
         test_losses.append(test_loss.item())
         
         # convert output probabilities to predicted class, get max prob class
         pred = torch.argmax(output, dim=1) 
         
         # compare predictions to true label
-        correct_tensor = pred.eq(labels)
+        correct_tensor = pred.eq(labels.long())
         correct = np.squeeze(correct_tensor.numpy()) if device == 'cpu' else np.squeeze(correct_tensor.cpu().numpy())
         num_correct += np.sum(correct)
 
