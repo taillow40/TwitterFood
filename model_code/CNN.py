@@ -336,6 +336,8 @@ def run_cnn(
     # Device setup
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+    net = net.to(device)
+
     trained_net = train(save_dir, net, train_loader, valid_loader, device,
                         optimizer, criterion, epochs, print_every = 10)
     
