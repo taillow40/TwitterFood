@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
-import nltk
+import pickle
 from gensim.models import KeyedVectors
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -93,7 +93,7 @@ def pad_features(embed_indexed_texts, seq_length):
     
     return features
     
-def load_data(filename, word2vec_path, batch_size):
+def load_data(data, y_labels, word2vec_path, batch_size):
     """
     Purpose: load in data
     Args:
@@ -103,21 +103,13 @@ def load_data(filename, word2vec_path, batch_size):
     Returns: train, validation, and test split data loaders and vocab size
     """
 
-    # import data
-    text_df = pd.read_pickle(filename)
-
-    # tokenize text
-    data_by_words = []
-    # loop through texts
-    for i in text_df['text']:
-        # get words, tokenize
-        value = nltk.word_tokenize(i)
-        data_by_words.append(value)
+    # load in word tokenized data
+    with open(data, "rb") as file:
+        data_by_words = pickle.load(file)
         
-    # encode y labels
-    labelencoder = LabelEncoder()
-    y = list(text_df['emotions'])
-    y = labelencoder.fit_transform(y)
+    # load in labels
+    with open(y_labels, "rb") as file:
+        y = pickle.load(file)
 
     # get embedding look up table for embedding layer
     embed_lookup = KeyedVectors.load_word2vec_format(word2vec_path, binary = False)
