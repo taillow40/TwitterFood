@@ -1,9 +1,7 @@
 import argparse
 import json
 import os
-from audio_CNN import run_audio_cnn
-from text_CNN_document_embeddings import run_text_doc_embedding_cnn
-from text_CNN_word_embeddings import run_text_word_embedding_cnn
+from model_code.CNN import run_cnn
 
 def load_config(config_path):
     """Load JSON configuration file."""
@@ -36,53 +34,30 @@ def main():
         return
 
     try:
-        preprocessed_data_paths = config["preprocessed_data_paths"]
+        preprocessed_data_path = config["preprocessed_data_path"]
+        label_path = config["label_path"]
         save_dir = config["save_dir"]
-        model_type = config["model_type"]
         batch_size = config["batch_size"]
         learning_rate = config["learning_rate"]
         epochs = config["epochs"]
         dropout = config["dropout"]
         word2vec_path = config["word2vec_path"]
+        embedding_size = config["embedding_size"]
     except KeyError as e:
         print(f"Missing key in configuration: {e}")
         return
     
-    if model_type == 'audio':
-        run_audio_cnn(
-            preprocessed_data_paths[0],
-            batch_size,
-            save_dir,
-            dropout,
-            learning_rate,
-            epochs
-        )
-        
-    elif model_type == 'text_doc':
-        run_text_doc_embedding_cnn(
-            preprocessed_data_paths[0],
-            preprocessed_data_paths[1],
-            preprocessed_data_paths[2],
-            preprocessed_data_paths[3],
-            preprocessed_data_paths[4],
-            preprocessed_data_paths[5],
-            batch_size,
-            save_dir,
-            dropout,
-            learning_rate,
-            epochs
-        )
-        
-    elif model_type == 'text_word':
-        run_text_word_embedding_cnn(
-            preprocessed_data_paths[0],
-            word2vec_path,
-            batch_size,
-            save_dir,
-            dropout,
-            learning_rate,
-            epochs
-        )
+    run_cnn(
+        preprocessed_data_path,
+        label_path,
+        word2vec_path,
+        batch_size,
+        save_dir,
+        embedding_size,
+        dropout,
+        learning_rate,
+        epochs
+    )
 
 if __name__ == '__main__':
     main()

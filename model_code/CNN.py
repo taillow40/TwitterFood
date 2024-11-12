@@ -3,7 +3,6 @@ import numpy as np
 import os
 import pickle
 from gensim.models import KeyedVectors
-from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 import torch
 from torch.utils.data import TensorDataset, DataLoader
@@ -288,11 +287,13 @@ def eval(
     test_acc = num_correct / len(test_loader.dataset)
     print(f"Test accuracy: {test_acc}")
     
-def run_text_word_embedding_cnn(
+def run_cnn(
     data_path,
+    labels,
     model_path,
     batch_size,
     save_dir,
+    embedding_size,
     dropout = 0.5,
     lr = 0.0001,
     epochs = 100
@@ -310,7 +311,7 @@ def run_text_word_embedding_cnn(
     Returns: None
     """
     
-    train_loader, valid_loader, test_loader, vocab_size, embed_lookup = load_data(data_path, model_path, batch_size)
+    train_loader, valid_loader, test_loader, vocab_size, embed_lookup = load_data(data_path, labels, model_path, batch_size)
 
     # Hyperparameters
     num_classes = 6
@@ -319,7 +320,7 @@ def run_text_word_embedding_cnn(
     # Instantiate the model
     net = TextCNN(
         embed_model=embed_lookup,
-        embedding_dim=100,
+        embedding_dim=embedding_size,
         vocab_size=vocab_size,
         num_filters=num_filters,
         num_classes=num_classes,
