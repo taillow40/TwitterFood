@@ -4,8 +4,6 @@ cbow, 100, batch size 50
 cbow, 100, batch size 100
 cbow, 100, dropout 0.5
 cbow, 100, dropout 0.3
-cbow, 100, epochs 10
-cbow, 100, epochs 50
 
 cbow,200
 
