@@ -1,0 +1,102 @@
+[
+    {
+        "config_name": "unigram_count_1000",
+        "average_accuracy": 0.745985,
+        "average_f1_scores": {
+            "0": 0.7519082023550936,
+            "1": 0.7397716347670029,
+            "macro avg": 0.7458399185610483,
+            "weighted avg": 0.7458399185610483
+        }
+    },
+    {
+        "config_name": "unigram_count_2000",
+        "average_accuracy": 0.7597462500000001,
+        "average_f1_scores": {
+            "0": 0.7645028337258648,
+            "1": 0.7547934739833672,
+            "macro avg": 0.7596481538546159,
+            "weighted avg": 0.7596481538546159
+        }
+    },
+    {
+        "config_name": "bigram_count_1000",
+        "average_accuracy": 0.735079375,
+        "average_f1_scores": {
+            "0": 0.7435142836023036,
+            "1": 0.7260704958093395,
+            "macro avg": 0.7347923897058216,
+            "weighted avg": 0.7347923897058216
+        }
+    },
+    {
+        "config_name": "bigram_count_2000",
+        "average_accuracy": 0.750476875,
+        "average_f1_scores": {
+            "0": 0.7566383418354317,
+            "1": 0.743994989638641,
+            "macro avg": 0.7503166657370363,
+            "weighted avg": 0.7503166657370363
+        }
+    },
+    {
+        "config_name": "unigram_tfidf_1000",
+        "average_accuracy": 0.746368125,
+        "average_f1_scores": {
+            "0": 0.750500813267572,
+            "1": 0.742095871144377,
+            "macro avg": 0.7462983422059745,
+            "weighted avg": 0.7462983422059745
+        }
+    },
+    {
+        "config_name": "unigram_tfidf_2000",
+        "average_accuracy": 0.75932,
+        "average_f1_scores": {
+            "0": 0.7624927436971002,
+            "1": 0.7560611844727244,
+            "macro avg": 0.7592769640849124,
+            "weighted avg": 0.7592769640849124
+        }
+    },
+    {
+        "config_name": "bigram_tfidf_1000",
+        "average_accuracy": 0.7373856249999999,
+        "average_f1_scores": {
+            "0": 0.7442990154936048,
+            "1": 0.7300874819973588,
+            "macro avg": 0.7371932487454819,
+            "weighted avg": 0.7371932487454819
+        }
+    },
+    {
+        "config_name": "bigram_tfidf_2000",
+        "average_accuracy": 0.7535825,
+        "average_f1_scores": {
+            "0": 0.758206517059125,
+            "1": 0.7487778823602318,
+            "macro avg": 0.7534921997096784,
+            "weighted avg": 0.7534921997096784
+        }
+    },
+    {
+        "config_name": "trigram_count_1000",
+        "average_accuracy": 0.7341781249999999,
+        "average_f1_scores": {
+            "0": 0.7431650328825807,
+            "1": 0.7245393421734163,
+            "macro avg": 0.7338521875279985,
+            "weighted avg": 0.7338521875279985
+        }
+    },
+    {
+        "config_name": "trigram_tfidf_2000",
+        "average_accuracy": 0.7520031250000001,
+        "average_f1_scores": {
+            "0": 0.756676289497782,
+            "1": 0.7471466747292677,
+            "macro avg": 0.7519114821135249,
+            "weighted avg": 0.751911482113525
+        }
+    }
+]
