@@ -1,0 +1,12 @@
+cbow, 100, lr 0.0001, batch size 50, dropout 0.5, epochs 10
+cbow, 100, lr 0.001
+cbow, 100, batch size 50
+cbow, 100, batch size 100
+cbow, 100, dropout 0.5
+cbow, 100, dropout 0.3
+
+cbow,200
+
+sg, 100
+
+sg, 200
