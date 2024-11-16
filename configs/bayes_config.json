@@ -1,0 +1,104 @@
+{
+    "configurations": [
+        {
+            "name": "unigram_count_1000",
+            "vectorizer": "CountVectorizer",
+            "max_features": 1000,
+            "ngram_range": [
+                1,
+                1
+            ],
+            "use_tfidf": false
+        },
+        {
+            "name": "unigram_count_2000",
+            "vectorizer": "CountVectorizer",
+            "max_features": 2000,
+            "ngram_range": [
+                1,
+                1
+            ],
+            "use_tfidf": false
+        },
+        {
+            "name": "bigram_count_1000",
+            "vectorizer": "CountVectorizer",
+            "max_features": 1000,
+            "ngram_range": [
+                1,
+                2
+            ],
+            "use_tfidf": false
+        },
+        {
+            "name": "bigram_count_2000",
+            "vectorizer": "CountVectorizer",
+            "max_features": 2000,
+            "ngram_range": [
+                1,
+                2
+            ],
+            "use_tfidf": false
+        },
+        {
+            "name": "unigram_tfidf_1000",
+            "vectorizer": "CountVectorizer",
+            "max_features": 1000,
+            "ngram_range": [
+                1,
+                1
+            ],
+            "use_tfidf": true
+        },
+        {
+            "name": "unigram_tfidf_2000",
+            "vectorizer": "CountVectorizer",
+            "max_features": 2000,
+            "ngram_range": [
+                1,
+                1
+            ],
+            "use_tfidf": true
+        },
+        {
+            "name": "bigram_tfidf_1000",
+            "vectorizer": "CountVectorizer",
+            "max_features": 1000,
+            "ngram_range": [
+                1,
+                2
+            ],
+            "use_tfidf": true
+        },
+        {
+            "name": "bigram_tfidf_2000",
+            "vectorizer": "CountVectorizer",
+            "max_features": 2000,
+            "ngram_range": [
+                1,
+                2
+            ],
+            "use_tfidf": true
+        },
+        {
+            "name": "trigram_count_1000",
+            "vectorizer": "CountVectorizer",
+            "max_features": 1000,
+            "ngram_range": [
+                1,
+                3
+            ],
+            "use_tfidf": false
+        },
+        {
+            "name": "trigram_tfidf_2000",
+            "vectorizer": "CountVectorizer",
+            "max_features": 2000,
+            "ngram_range": [
+                1,
+                3
+            ],
+            "use_tfidf": true
+        }
+    ]
+}
