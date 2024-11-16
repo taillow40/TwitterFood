@@ -243,7 +243,8 @@ def eval(
     test_loader,
     net,
     device,
-    criterion
+    criterion,
+    save_dir
 ):
     """
     Purpose: Evaluate/test the model
@@ -252,6 +253,7 @@ def eval(
         net: trained model to evaluate
         device: device to run eval on
         criterion: loss function
+        save_dir: save directory
     Returns: None
     """
     
@@ -286,6 +288,8 @@ def eval(
 
     # accuracy over all test data
     test_acc = num_correct / len(test_loader.dataset)
+    with open(os.path.join(save_dir, 'accuracy.txt'), 'w') as output:
+        output.write(test_acc)
     print(f"Test accuracy: {test_acc}")
     
 def run_cnn(
@@ -341,4 +345,4 @@ def run_cnn(
     trained_net = train(save_dir, net, train_loader, valid_loader, device,
                         optimizer, criterion, epochs, print_every = 10)
     
-    eval(test_loader, trained_net, device, criterion)
+    eval(test_loader, trained_net, device, criterion, save_dir)
