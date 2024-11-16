@@ -1,0 +1,11 @@
+{
+    "preprocessed_data_path": "C:/Users/Jennie/Documents/NLP/Project/data_by_words.pkl",
+    "label_path": "C:/Users/Jennie/Documents/NLP/Project/labels.pkl",
+    "save_dir": "C:/Users/Jennie/Documents/NLP/Project/experiments/sg200",
+    "batch_size": 50,
+    "learning_rate": 0.0001,
+    "epochs": 1,
+    "dropout": 0.5,
+    "word2vec_path": "C:/Users/Jennie/Documents/NLP/Project/word2vec_200_sg.model",
+    "embedding_size": 200
+}
