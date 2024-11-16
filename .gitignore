@@ -2,3 +2,4 @@
 *.xlsx
 *.pkl
 __pycache__/
+*.model
