@@ -2,10 +2,9 @@ from model_code.CNN import run_cnn
 import os
 import json
 
-directory = './configs'
+directory = 'configs'
 all_paths = [os.path.join(directory, f) for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
-
-for config_path in directory:
+for config_path in all_paths:
     with open(config_path, 'r') as file:
         config = json.load(file)
     try:
