@@ -287,7 +287,7 @@ def eval(
     # accuracy over all test data
     test_acc = num_correct / len(test_loader.dataset)
     with open(os.path.join(save_dir, 'accuracy.txt'), 'w') as output:
-        output.write(test_acc)
+        output.write(str(test_acc))
     print(f"Test accuracy: {test_acc}")
     
 def run_cnn(
@@ -317,7 +317,7 @@ def run_cnn(
     train_loader, valid_loader, test_loader, vocab_size, embed_lookup = load_data(data_path, labels, model_path, batch_size)
 
     # Hyperparameters
-    num_classes = 6
+    num_classes = 2
     num_filters = 100
 
     # Instantiate the model
@@ -349,7 +349,7 @@ def tokenize_input(word2vec_path, input_text):
     """
     Purpose: prep text input for inference
     Args:
-        word2vec_path: path to word2vec model with embedddings
+        word2vec_path: path to word2vec model with embeddings
         input_text: text to classify
 
     Returns: prepped text to have inference run on and embedding indices for the input
