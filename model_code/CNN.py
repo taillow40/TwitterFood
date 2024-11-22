@@ -317,7 +317,7 @@ def run_cnn(
     train_loader, valid_loader, test_loader, vocab_size, embed_lookup = load_data(data_path, labels, model_path, batch_size)
 
     # Hyperparameters
-    num_classes = 2
+    num_classes = 1
     num_filters = 100
 
     # Instantiate the model
