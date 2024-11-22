@@ -406,3 +406,5 @@ def run_text_word_embedding_infer(
     }
     
     print("Sentiment Detected: " + mapping_dict[pred.item()])
+
+    return pred.item()
