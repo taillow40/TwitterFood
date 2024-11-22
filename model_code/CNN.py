@@ -181,7 +181,7 @@ def train(
             output = net(inputs)
 
             # calculate the loss and perform backprop
-            loss = criterion(output, labels.long())
+            loss = criterion(output.squeeze(), labels.long())
             loss.backward()
             optimizer.step()
             
@@ -199,7 +199,7 @@ def train(
                     inputs, labels = inputs.to(device), labels.to(device).long()
 
                     output = net(inputs)
-                    val_loss = criterion(output, labels.long())
+                    val_loss = criterion(output.squeeze(), labels.long())
 
                     val_losses.append(val_loss.item())
                     running_val_loss += val_loss.item()
@@ -269,11 +269,11 @@ def eval(
         output = net(inputs)
         
         # calculate loss
-        test_loss = criterion(output, labels.long())
+        test_loss = criterion(output.squeeze(), labels.long())
         test_losses.append(test_loss.item())
         
         # convert output probabilities to predicted class, get max prob class
-        pred = torch.argmax(output, dim=1) 
+        pred = torch.argmax(output.squeeze(), dim=1) 
         
         # compare predictions to true label
         correct_tensor = pred.eq(labels.long())
