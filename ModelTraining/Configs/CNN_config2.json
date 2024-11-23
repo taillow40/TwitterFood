@@ -1,0 +1,11 @@
+{
+    "preprocessed_data_path": "Intermediate\\data_by_words_preprocessed.pkl",
+    "label_path": "Intermediate\\labels.pkl",
+    "save_dir": "Intermediate\\SomeStuff\\2",
+    "batch_size": 1024,
+    "learning_rate": 0.0001,
+    "epochs": 10,
+    "dropout": 0.5,
+    "word2vec_path": "Intermediate\\word2vec_200_cbow.model",
+    "embedding_size": 200
+}
