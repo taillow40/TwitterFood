@@ -116,6 +116,6 @@ Examples:
 
 `python run_models.py --config "TwitterFood/ModelTraining/Configs/CNN_config2.json"`
 
-### Resources/ References
+### Resources / References
 
 Sentiment 140 Dataset: <https://www.kaggle.com/datasets/kazanova/sentiment140>
