@@ -86,6 +86,8 @@ def pad_features(embed_indexed_texts, seq_length):
     features = np.zeros((len(embed_indexed_texts), seq_length), dtype=int)
 
     for i, row in enumerate(embed_indexed_texts):
+        if len(row) == 0:
+            continue
         features[i, -len(row):] = np.array(row)[:seq_length]
     
     return features
@@ -127,8 +129,8 @@ def load_data(data, y_labels, word2vec_path, batch_size):
     test_data = TensorDataset(torch.from_numpy(X_test), torch.from_numpy(y_test))
 
     # shuffling and batching data
-    train_loader = DataLoader(train_data, shuffle=True, batch_size=batch_size)
-    valid_loader = DataLoader(val_data, shuffle=True, batch_size=batch_size)
+    train_loader = DataLoader(train_data, shuffle=True, batch_size=batch_size, num_workers=4, pin_memory=True)
+    valid_loader = DataLoader(val_data, shuffle=True, batch_size=batch_size, num_workers=4, pin_memory=True)
     test_loader = DataLoader(test_data, shuffle=True, batch_size=batch_size)
     
     return train_loader, valid_loader, test_loader, vocab_size, embed_lookup
@@ -159,7 +161,6 @@ def train(
     Returns: trained model
     """
     
-    counter = 0 
     epoch_train_loss = []
     epoch_val_loss = []
     
@@ -167,10 +168,9 @@ def train(
     net.train()
     for e in range(epochs):
         running_train_loss = 0.0
-
+        running_validation_loss_total = 0.0
         # batch loop
         for inputs, labels in train_loader:
-            counter += 1
 
             inputs, labels = inputs.to(device), labels.to(device).long()
 
@@ -187,53 +187,56 @@ def train(
             
             running_train_loss += loss.item()
 
-            # loss stats
-            if counter % print_every == 0:
-                # Get validation loss
-                val_losses = []
-                net.eval()
-                running_val_loss = 0.0
-                
-                for inputs, labels in valid_loader:
-
-                    inputs, labels = inputs.to(device), labels.to(device).long()
-
-                    output = net(inputs)
-                    val_loss = criterion(output.squeeze(), labels.float())
-
-                    val_losses.append(val_loss.item())
-                    running_val_loss += val_loss.item()
-
-                net.train()
-                print(f"Epoch: {e+1}/{epochs}...",
-                      f"Step: {counter}...",
-                      f"Loss: {loss.item()}...",
-                      f"Val Loss: {np.mean(val_losses)}")
+            # Get validation loss
+            val_losses = []
+            net.eval()
+            running_val_loss = 0.0
         
+
+            net.train()
+           
+            
+        for inputs, labels in valid_loader:
+
+            inputs, labels = inputs.to(device), labels.to(device).long()
+
+            output = net(inputs)
+            val_loss = criterion(output.squeeze(), labels.float())
+
+            item = val_loss.item()
+            val_losses.append(item)
+            running_val_loss += item
+            running_validation_loss_total += item
+        
+         
+    
         # Average training loss for the epoch
         avg_train_loss = running_train_loss / len(train_loader)
         epoch_train_loss.append(avg_train_loss)
         
         # Average validation loss for the epoch
-        avg_val_loss = running_val_loss / len(valid_loader)
+        avg_val_loss = running_validation_loss_total / len(valid_loader)
         epoch_val_loss.append(avg_val_loss)
                 
     # Save the trained model final checkpoint
-    torch.save({
-        'epoch': epochs,  
-        'model_state_dict': net.state_dict(),
-        'optimizer_state_dict': optimizer.state_dict(),
-        'loss': loss,
-    }, os.path.join(save_dir, 'word_embedding_model_checkpoint.pth'))
-    
-    # save train and val loss plot
-    plt.plot(epoch_train_loss, label='Training Loss')
-    plt.plot(epoch_val_loss, label='Validation Loss')
-    plt.xlabel('Epochs')
-    plt.ylabel('Loss')
-    plt.legend(['Train', 'Val'], loc='upper left')
-    plt.title('Training and Validation Loss over Epochs')
-    plt.savefig(os.path.join(save_dir, 'Text_loss_word_embedding_plot.png'))
+    try:
+        torch.save({
+            'epoch': epochs,  
+            'model_state_dict': net.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'loss': loss,
+        }, os.path.join(save_dir, 'word_embedding_model_checkpoint.pth'))
+        
+        # save train and val loss plot
+        plt.plot(epoch_train_loss, label='Training Loss')
+        plt.plot(epoch_val_loss, label='Validation Loss')
+        plt.xlabel('Epochs')
+        plt.ylabel('Loss')
+        plt.legend(['Train', 'Val'], loc='upper left')
+        plt.title('Training and Validation Loss over Epochs')
+        plt.savefig(os.path.join(save_dir, 'Text_loss_word_embedding_plot.png'))
+    except:
+        print("Error saving model checkpoint")
     
     return net
 
@@ -273,7 +276,8 @@ def eval(
         test_losses.append(test_loss.item())
         
         # convert output probabilities to predicted class, get max prob class
-        pred = torch.argmax(output.squeeze(), dim=1) 
+        pred = torch.round(output.squeeze()) 
+        
         
         # compare predictions to true label
         correct_tensor = pred.eq(labels.float())
@@ -341,7 +345,7 @@ def run_cnn(
     net = net.to(device)
 
     trained_net = train(save_dir, net, train_loader, valid_loader, device,
-                        optimizer, criterion, epochs, print_every = 10)
+                        optimizer, criterion, epochs, print_every = 1000)
     
     eval(test_loader, trained_net, device, criterion, save_dir)
     
