@@ -1,4 +1,4 @@
-from model_code.CNN import run_cnn
+from ModelCode.CNN import run_cnn
 import os
 import json
 import sys

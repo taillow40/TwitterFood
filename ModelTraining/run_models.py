@@ -1,7 +1,7 @@
 import argparse
 import json
 import os
-from model_code.CNN import run_cnn
+from ModelCode.CNN import run_cnn
 
 def load_config(config_path):
     """Load JSON configuration file."""
